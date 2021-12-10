@@ -1,0 +1,8 @@
+.btn-container {
+  float: right;
+  display: inline-flex;
+
+  :nth-child(odd) > button {
+    margin-right: 16px !important;
+  }
+}
