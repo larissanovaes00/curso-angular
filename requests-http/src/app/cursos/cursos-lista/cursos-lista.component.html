@@ -48,7 +48,10 @@
                 </button>
               </div>
               <div class="ml-1">
-                <button class="btn btn-outline-danger mb-1 btn-sm">
+                <button
+                  class="btn btn-outline-danger mb-1 btn-sm"
+                  (click)="onDelete(curso)"
+                >
                   Remover
                 </button>
               </div>
@@ -64,22 +67,21 @@
         <span>Carregando Cursos...</span>
       </ng-template>
     </ng-template>
-
-    <!--ng-template #loadingError>
-      <div *ngIf="error$ | async; else loading" >
-        Erro ao carregar cursos. Tente novamente mais tarde.
-      </div>
-      <ng-template #loading>
-          <span>Carregando Cursos...</span>
-      </ng-template>
-    </ng-template -->
   </div>
 </div>
 
-<!-- <ng-template #deleteModal>
+<ng-template #deleteModal>
   <div class="modal-body text-center">
     <p>Tem certeza que deseja remover esse curso?</p>
-    <button type="button" class="btn btn-default" (click)="onConfirmDelete()">Sim</button>
-    <button type="button" class="btn btn-primary" (click)="onDeclineDelete()">Nao</button>
+    <button
+      type="button"
+      class="btn btn-default"
+      (click)="onConfirmDelete()"
+    >
+      Sim
+    </button>
+    <button type="button" class="btn btn-primary" (click)="onDeclineDelete()">
+      Não
+    </button>
   </div>
-</ng-template> -->
+</ng-template>

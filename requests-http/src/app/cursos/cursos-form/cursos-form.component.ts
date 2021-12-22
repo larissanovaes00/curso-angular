@@ -23,40 +23,18 @@ export class CursosFormComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    // this.route.params.subscribe((params: any) => {
-    //   const id = params['id'];
-    //   const curso$ = this.service.loadById(id);
-    //   curso$.subscribe((curso) => {
-    //     this.updateForm(curso);
-    //   });
-    // });
-
-    // this.route.params
-    //   .pipe(
-    //     map((params: any) => params['id']),
-    //     switchMap((id) => this.service.loadById(id))
-    //   )
-    //   .subscribe((curso) => this.updateForm(curso));
-
-    const curso = this.route.snapshot;
+    const curso = this.route.snapshot.data['curso'];
 
     this.form = this.fb.group({
-      id: [null],
+      id: [curso.id],
       nome: [
-        null,
+        curso.nome,
         [
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(250),
         ],
       ],
-    });
-  }
-
-  updateForm(curso: any) {
-    this.form.patchValue({
-      id: curso.id,
-      nome: curso.nome,
     });
   }
 
@@ -67,17 +45,21 @@ export class CursosFormComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
     if (this.form.valid) {
-      this.service.create(this.form.value).subscribe(
+      let messageSuccess = 'Curso criado com sucesso';
+      let messageError = 'Erro ao criar curso, tente novamente mais tarde';
+
+      if (this.form.value.id) {
+        messageSuccess = 'Curso atualizado com sucesso';
+        messageError = 'Erro ao atualizar curso, tente novamente mais tarde';
+      }
+
+      this.service.save(this.form.value).subscribe(
         (success) => {
-          this.modal.showAlertSuccess('Curso criado com sucesso');
+          this.modal.showAlertSuccess(messageSuccess);
           this.location.back();
         },
-        (error) =>
-          this.modal.showAlertDanger(
-            'Erro ao criar curso, tente novamente mais tarde'
-          ),
-        () => {
-          console.log('finalizou');
+        (error) => {
+          this.modal.showAlertDanger(messageError);
         }
       );
     }
